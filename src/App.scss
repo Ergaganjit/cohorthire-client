@@ -1,0 +1,11 @@
+// @use "./styles/global" as *
+* {
+    font-family: "Oswald", sans-serif;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  ::-webkit-scrollbar{
+    display: none;
+  }
