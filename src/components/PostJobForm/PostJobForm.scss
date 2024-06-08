@@ -42,7 +42,7 @@
       display: block;
       width: 100%;
       padding: 10px;
-      background-color: #007bff;
+      background-color: rgb(148, 78, 28);
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -50,7 +50,7 @@
       transition: background-color 0.3s;
   
       &:hover {
-        background-color: #0056b3;
+        background-color:  rgb(224, 171, 132);
       }
     }
   }

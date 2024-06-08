@@ -1,0 +1,38 @@
+.employer-carousel {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    .carousel-items {
+      display: flex;
+      justify-content: space-between;
+  
+      .carousel-item {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 20px); /* Adjust based on the number of items per row */
+        margin-right: 20px;
+  
+        &:last-child {
+          margin-right: 0;
+        }
+  
+        h3 {
+          margin-bottom: 10px;
+        }
+  
+        p {
+          color: #666;
+        }
+      }
+    }
+  }
+  
