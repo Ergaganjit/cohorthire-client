@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CandidateData.scss'; // Import your SCSS file for styling
 import { FaTrash, FaEdit } from 'react-icons/fa'; // Import trash and edit icons from react-icons
-import CandidateForm from '../CandidateForm/CandidateForm'; // Import the CandidateForm component
+import PostCandidateForm from '../PostCandidateForm/PostCandidateForm'; // Import the CandidateForm component
 
 const CandidateData = () => {
   const [candidates, setCandidates] = useState([]); // Initialize as an empty array
@@ -35,7 +35,7 @@ const CandidateData = () => {
   const handleCandidateClick = async (candidateId) => {
     try {
       const response = await axios.get(`http://127.0.0.1:8787/api/candidates/${candidateId}`);
-      setSelectedCandidate(response.data);
+     console.log(setSelectedCandidate(response.data));
     } catch (err) {
       setError(err);
     }
@@ -135,7 +135,7 @@ const CandidateData = () => {
       {editMode && editCandidate && (
         <div className="edit-candidate-form">
           <h3>Edit Candidate</h3>
-          <CandidateForm candidateData={editCandidate} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+          <PostCandidateForm candidateData={editCandidate} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
         </div>
       )}
     </div>

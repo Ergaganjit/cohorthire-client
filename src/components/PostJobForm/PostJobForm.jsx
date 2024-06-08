@@ -41,13 +41,21 @@ const PostJobForm = ({ jobData, onCancelEdit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.id) {
-        // Update existing job
-        await axios.put(`http://127.0.0.1:8787/api/jobs/${formData.id}`, formData);
-      } else {
-        // Create new job
-        await axios.post('http://127.0.0.1:8787/api/jobs', formData);
-      }
+      const url = formData.id
+        ? `http://127.0.0.1:8787/api/jobs/${formData.id}`
+        : 'http://127.0.0.1:8787/api/jobs';
+
+      const method = formData.id ? 'put' : 'post';
+
+      await axios({
+        method,
+        url,
+        data: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
       // Optionally, reset the form data after successful submission
       setFormData({
         jobTitle: '',
@@ -73,6 +81,7 @@ const PostJobForm = ({ jobData, onCancelEdit }) => {
         expectedStartDate: '',
         sponsorship: false
       });
+
       alert('Form submitted successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -184,4 +193,3 @@ const PostJobForm = ({ jobData, onCancelEdit }) => {
 };
 
 export default PostJobForm;
-

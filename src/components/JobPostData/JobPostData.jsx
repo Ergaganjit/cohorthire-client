@@ -38,6 +38,7 @@ const JobPostData = () => {
 
   const handleDelete = async (jobId) => {
     try {
+    
       await axios.delete(`http://127.0.0.1:8787/api/jobs/${jobId}`);
       setJobs(jobs.filter(job => job.id !== jobId));
       setSelectedJob(null); // Clear selected job after deletion
