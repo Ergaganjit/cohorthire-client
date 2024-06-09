@@ -19,8 +19,8 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="text-section">
-        <h1>Welcome to JobPortal</h1>
-        <p>Your gateway to the best job opportunities and candidates.</p>
+        <h1>Welcome to CohortHire</h1>
+        <p>Streamline Your Recruitment Process with CohortHire</p>
         <div className="home-actions">
           <button onClick={openSignUpModal}>Sign Up</button>
           <button onClick={openLoginModal}>Login</button>

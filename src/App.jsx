@@ -28,7 +28,7 @@ const App = () => {
 
         </main>
         <footer className="footer">
-          <p>&copy; 2024 JobPortal. All rights reserved.</p>
+          <p>&copy; 2024 CohortHire. All rights reserved by DevOrbs.</p>
         </footer>
       </div>
     </Router>
