@@ -12,10 +12,10 @@ const Candidates = () => {
         </p>
         <ul className="candidates-options">
           <li>
-            <a href="/post-candidate">Register Your Profile</a>
+            <a href="/post-candidate">Register Profile</a>
           </li>
           <li>
-            <a href="/job-postings">View Job Postings</a>
+            <a href="/job-postings">View Jobs</a>
           </li>
           <li>
             <a href="/tech-news">Tech News</a>
