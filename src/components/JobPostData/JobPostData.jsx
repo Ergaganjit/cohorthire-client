@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Import Toastify for notifications
 import './JobPostData.scss';
-import { FaTrash, FaEdit } from 'react-icons/fa';
 import PostJobForm from '../PostJobForm/PostJobForm';
+import { FaTrash, FaEdit, FaUserCheck } from 'react-icons/fa';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const JobPostData = () => {
@@ -72,13 +73,23 @@ const JobPostData = () => {
     setEditJob(null);
   };
 
-  if (loading) {
-    return <p>Loading jobs...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading jobs: {error.message}</p>;
-  }
+  const handleApplication = async (jobId) => {
+    try {
+      await axios.post(`http://127.0.0.1:8787/api/jobs/${jobId}/apply`);
+      setJobs(prevJobs =>
+        prevJobs.map(job => {
+          if (job.id === jobId) {
+            toast.success('Application submitted successfully');
+            return { ...job, applications: job.applications + 1 };
+          }
+          return job;
+        })
+      );
+    } catch (err) {
+      setError(err);
+      toast.error('Failed to submit application');
+    }
+  };
 
   return (
     <div className="job-post-data">
@@ -88,29 +99,28 @@ const JobPostData = () => {
       </div>
       <div className="job-container">
         <div className="job-list">
-          <TransitionGroup>
-            {jobs.map((job) => (
-              <CSSTransition key={job.id} timeout={500} classNames="job-card">
-                <div className="job-card" onClick={() => handleJobClick(job.id)}>
-                  <div className="job-card-header">
-                    <h3>{job.jobTitle}</h3>
-                    <div className="job-card-actions">
-                      <button onClick={(event) => handleDelete(job.id, event)}>
-                        <FaTrash />
-                      </button>
-                      <button onClick={(event) => handleEdit(job.id, event)}>
-                        <FaEdit />
-                      </button>
-                    </div>
+          {jobs.map((job) => (
+            <div key={job.id} className="job-card" onClick={() => handleJobClick(job.id)}>
+              <div className="job-card-header">
+                <h3>{job.jobTitle}</h3>
+                <div className="job-card-actions">
+                  <button onClick={(event) => handleDelete(job.id, event)}>
+                    <FaTrash />
+                  </button>
+                  <button onClick={(event) => handleEdit(job.id, event)}>
+                    <FaEdit />
+                  </button>
+                  <div className="application-count">
+                    <FaUserCheck /> {job.applications || 0}
                   </div>
-                  <p><strong>Company:</strong> {job.company}</p>
-                  <p><strong>Location:</strong> {job.location}</p>
-                  <p><strong>Type:</strong> {job.jobType}</p>
-                  <p><strong>Pay:</strong> {job.pay}</p>
                 </div>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
+              </div>
+              <p><strong>Company:</strong> {job.company}</p>
+              <p><strong>Location:</strong> {job.location}</p>
+              <p><strong>Type:</strong> {job.jobType}</p>
+              <p><strong>Pay:</strong> {job.pay}</p>
+            </div>
+          ))}
         </div>
         <div className="job-details-container">
           {selectedJob ? (

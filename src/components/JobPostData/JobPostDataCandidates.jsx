@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link component
 import './JobPostData.scss';
 
 const JobPostDataCandidates = () => {
@@ -57,6 +58,9 @@ const JobPostDataCandidates = () => {
               <p><strong>Location:</strong> {job.location}</p>
               <p><strong>Type:</strong> {job.jobType}</p>
               <p><strong>Pay:</strong> {job.pay}</p>
+              <div className="applications-count">Applications: {job.applications || 0}</div>
+              {/* Link to the post candidate page */}
+              <Link to="/post-candidate">Apply</Link>
             </div>
           ))}
         </div>

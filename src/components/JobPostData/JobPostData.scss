@@ -7,45 +7,13 @@
   .job-listing-header {
     text-align: center;
     margin-bottom: 40px;
-    border: 2px solid #007bff; /* Add border */
-    padding: 20px; /* Add padding */
-    border-radius: 10px; /* Add border radius */
-    background-color: #f0f8ff; /* Add background color */
-    animation: fadeIn 1s ease-in-out;
-    width: 80%; /* Adjust width */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add box shadow */
-  }
-
-  .welcome-banner {
-    background-color: #007bff;
-    color: #fff;
-    padding: 40px; /* Increase padding */
+    border: 2px solid #007bff;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: #f0f8ff;
     animation: fadeIn 1s ease-in-out;
-    margin-bottom: 30px;
-    display: flex; /* Align content center */
-    align-items: center; /* Align content center */
-    justify-content: center; /* Align content center */
-  }
-
-  .welcome-banner h2 {
-    font-size: 48px; /* Increase font size */
-    margin: 0;
-    font-weight: bold;
-    display: flex; /* Align icon and text */
-    align-items: center; /* Align icon and text */
-  }
-
-  .welcome-banner h2 span {
-    margin-right: 20px; /* Add spacing between icon and text */
-  }
-
-  .instruction-message {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 30px;
-    animation: fadeInUp 1.2s ease-in-out;
+    width: 80%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   .job-container {
@@ -59,41 +27,89 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
 
-  .job-card {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
+    .job-card {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .job-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      h3 {
-        margin: 0;
-        font-size: 18px;
-        color: #333;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
-    }
 
-    p {
-      margin: 10px 0;
-      font-size: 14px;
-      color: #555;
+      .job-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-      strong {
-        font-weight: bold;
-        color: #000;
+        h3 {
+          margin: 0;
+          font-size: 18px;
+          color: #333;
+        }
+
+        .job-card-actions {
+          display: flex;
+          align-items: center;
+
+          button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 5px;
+            margin: 0 5px;
+            font-size: 18px;
+            color: #6c757d;
+            transition: color 0.3s;
+
+            &:hover {
+              color: #007bff;
+            }
+          }
+
+          .application-count {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #6c757d;
+
+            .application-icon {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+
+      p {
+        margin: 10px 0;
+        font-size: 14px;
+        color: #555;
+
+        strong {
+          font-weight: bold;
+          color: #000;
+        }
+      }
+
+      .apply-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        text-decoration: none;
+
+        &:hover {
+          background-color: #0056b3;
+          transform: translateY(-2px);
+        }
       }
     }
   }
@@ -118,7 +134,7 @@
       border-bottom: 1px solid #ddd;
       font-size: 14px;
       color: #555;
-      padding:0.7rem;
+      padding: 0.7rem;
 
       &:last-child {
         border-bottom: none;
@@ -129,6 +145,12 @@
         color: #000;
       }
     }
+  }
+
+  .edit-job-form {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
   }
 
   .job-card-enter {
