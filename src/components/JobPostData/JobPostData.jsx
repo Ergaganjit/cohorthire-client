@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './JobPostData.scss'; // Import your SCSS file for styling
-import { FaTrash, FaEdit } from 'react-icons/fa'; // Import trash and edit icons from react-icons
-import PostJobForm from '../PostJobForm/PostJobForm'; // Import the PostJobForm component
+import './JobPostData.scss';
+import { FaTrash, FaEdit } from 'react-icons/fa';
+import PostJobForm from '../PostJobForm/PostJobForm';
+import Modal from '../Modal/Modal'; // Import the Modal component
 
 const JobPostData = () => {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editMode, setEditMode] = useState(false); // State variable for edit mode
-  const [editJob, setEditJob] = useState(null); // State variable to store job data for editing
+  const [editMode, setEditMode] = useState(false);
+  const [editJob, setEditJob] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State variable for modal visibility
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -31,6 +33,7 @@ const JobPostData = () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
       setSelectedJob(response.data);
+      setIsModalOpen(true); // Open the modal
     } catch (err) {
       setError(err);
     }
@@ -38,10 +41,9 @@ const JobPostData = () => {
 
   const handleDelete = async (jobId) => {
     try {
-    
       await axios.delete(`http://127.0.0.1:8787/api/jobs/${jobId}`);
       setJobs(jobs.filter(job => job.id !== jobId));
-      setSelectedJob(null); // Clear selected job after deletion
+      setSelectedJob(null);
     } catch (err) {
       setError(err);
     }
@@ -49,26 +51,25 @@ const JobPostData = () => {
 
   const handleEdit = async (jobId) => {
     try {
-        const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
-        const editedJob = response.data;
-        // Update the job in the jobs array
-        const updatedJobs = jobs.map(job => {
-          if (job.id === editedJob.id) {
-            return editedJob;
-          }
-          return job;
-        });
-        setJobs(updatedJobs);
-        setEditJob(editedJob); // Set job data for editing
-        setEditMode(true); // Activate edit mode
-      } catch (err) {
-        setError(err);
-      }
+      const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
+      const editedJob = response.data;
+      const updatedJobs = jobs.map(job => {
+        if (job.id === editedJob.id) {
+          return editedJob;
+        }
+        return job;
+      });
+      setJobs(updatedJobs);
+      setEditJob(editedJob);
+      setEditMode(true);
+    } catch (err) {
+      setError(err);
+    }
   };
 
   const handleCancelEdit = () => {
-    setEditMode(false); // Deactivate edit mode
-    setEditJob(null); // Clear edit job data
+    setEditMode(false);
+    setEditJob(null);
   };
 
   if (loading) {
@@ -83,9 +84,7 @@ const JobPostData = () => {
     <div className="job-post-data">
       <h2>Job Listings</h2>
       <table className="job-table">
-        {/* Table header */}
         <tbody>
-          {/* Jobs list */}
           {jobs.map((job) => (
             <tr key={job.id} onClick={() => handleJobClick(job.id)}>
               <td>{job.id}</td>
@@ -106,16 +105,16 @@ const JobPostData = () => {
           ))}
         </tbody>
       </table>
-      {/* Job details */}
-      {selectedJob && (
-        <div className="job-details">
-          <h3>Selected Job Details</h3>
-          {Object.entries(selectedJob).map(([key, value]) => (
-            <p key={key}><strong>{key}:</strong> {value}</p>
-          ))}
-        </div>
+      {isModalOpen && selectedJob && (
+        <Modal onClose={() => setIsModalOpen(false)}> {/* Modal component */}
+          <div className="job-details">
+            <h3>Selected Job Details</h3>
+            {Object.entries(selectedJob).map(([key, value]) => (
+              <p key={key}><strong>{key}:</strong> {value}</p>
+            ))}
+          </div>
+        </Modal>
       )}
-      {/* Edit job form */}
       {editMode && editJob && (
         <div className="edit-job-form">
           <h3>Edit Job</h3>

@@ -27,7 +27,10 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
         ? `http://127.0.0.1:8787/api/candidates/${formData.id}`
         : 'http://127.0.0.1:8787/api/candidates';
 
-      const method = formData.id ? 'put' : 'post';
+      // console.log("formData: ",formData);
+      // const method = formData.id ? 'put' : 'post';
+      const method = "POST";
+      console.log("method: ",method);
 
       await axios({
         method,
