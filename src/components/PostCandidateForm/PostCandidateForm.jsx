@@ -27,7 +27,10 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
         ? `http://127.0.0.1:8787/api/candidates/${formData.id}`
         : 'http://127.0.0.1:8787/api/candidates';
 
-      const method = formData.id ? 'put' : 'post';
+      // console.log("formData: ",formData);
+      // const method = formData.id ? 'put' : 'post';
+      const method = "POST";
+      console.log("method: ",method);
 
       await axios({
         method,
@@ -57,7 +60,7 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
 
   return (
     <div className="form-container">
-      <h2>{formData.id ? 'Edit Candidate' : 'Post a Candidate'}</h2>
+      <h2>{formData.id ? 'Edit Candidate' : 'Apply job'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>

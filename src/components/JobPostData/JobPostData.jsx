@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './JobPostData.scss'; // Import your SCSS file for styling
-import { FaTrash, FaEdit } from 'react-icons/fa'; // Import trash and edit icons from react-icons
-import PostJobForm from '../PostJobForm/PostJobForm'; // Import the PostJobForm component
+import './JobPostData.scss';
+import { FaTrash, FaEdit } from 'react-icons/fa';
+import PostJobForm from '../PostJobForm/PostJobForm';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const JobPostData = () => {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editMode, setEditMode] = useState(false); // State variable for edit mode
-  const [editJob, setEditJob] = useState(null); // State variable to store job data for editing
+  const [editMode, setEditMode] = useState(false);
+  const [editJob, setEditJob] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -36,39 +37,39 @@ const JobPostData = () => {
     }
   };
 
-  const handleDelete = async (jobId) => {
+  const handleDelete = async (jobId, event) => {
+    event.stopPropagation();
     try {
-    
       await axios.delete(`http://127.0.0.1:8787/api/jobs/${jobId}`);
       setJobs(jobs.filter(job => job.id !== jobId));
-      setSelectedJob(null); // Clear selected job after deletion
+      setSelectedJob(null);
     } catch (err) {
       setError(err);
     }
   };
 
-  const handleEdit = async (jobId) => {
+  const handleEdit = async (jobId, event) => {
+    event.stopPropagation();
     try {
-        const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
-        const editedJob = response.data;
-        // Update the job in the jobs array
-        const updatedJobs = jobs.map(job => {
-          if (job.id === editedJob.id) {
-            return editedJob;
-          }
-          return job;
-        });
-        setJobs(updatedJobs);
-        setEditJob(editedJob); // Set job data for editing
-        setEditMode(true); // Activate edit mode
-      } catch (err) {
-        setError(err);
-      }
+      const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
+      const editedJob = response.data;
+      const updatedJobs = jobs.map(job => {
+        if (job.id === editedJob.id) {
+          return editedJob;
+        }
+        return job;
+      });
+      setJobs(updatedJobs);
+      setEditJob(editedJob);
+      setEditMode(true);
+    } catch (err) {
+      setError(err);
+    }
   };
 
   const handleCancelEdit = () => {
-    setEditMode(false); // Deactivate edit mode
-    setEditJob(null); // Clear edit job data
+    setEditMode(false);
+    setEditJob(null);
   };
 
   if (loading) {
@@ -81,41 +82,51 @@ const JobPostData = () => {
 
   return (
     <div className="job-post-data">
-      <h2>Job Listings</h2>
-      <table className="job-table">
-        {/* Table header */}
-        <tbody>
-          {/* Jobs list */}
-          {jobs.map((job) => (
-            <tr key={job.id} onClick={() => handleJobClick(job.id)}>
-              <td>{job.id}</td>
-              <td>{job.jobTitle}</td>
-              <td>{job.company}</td>
-              <td>{job.location}</td>
-              <td>{job.jobType}</td>
-              <td>{job.pay}</td>
-              <td>
-                <button onClick={() => handleDelete(job.id)}>
-                  <FaTrash />
-                </button>
-                <button onClick={() => handleEdit(job.id)}>
-                  <FaEdit />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Job details */}
-      {selectedJob && (
-        <div className="job-details">
-          <h3>Selected Job Details</h3>
-          {Object.entries(selectedJob).map(([key, value]) => (
-            <p key={key}><strong>{key}:</strong> {value}</p>
-          ))}
+      <div className="job-listing-header">
+        <h2 className="welcome-message">Hello Employer!</h2>
+        <p className="instruction-message">You can view your posts, edit job postings, and delete them if vacancies are filled.</p>
+      </div>
+      <div className="job-container">
+        <div className="job-list">
+          <TransitionGroup>
+            {jobs.map((job) => (
+              <CSSTransition key={job.id} timeout={500} classNames="job-card">
+                <div className="job-card" onClick={() => handleJobClick(job.id)}>
+                  <div className="job-card-header">
+                    <h3>{job.jobTitle}</h3>
+                    <div className="job-card-actions">
+                      <button onClick={(event) => handleDelete(job.id, event)}>
+                        <FaTrash />
+                      </button>
+                      <button onClick={(event) => handleEdit(job.id, event)}>
+                        <FaEdit />
+                      </button>
+                    </div>
+                  </div>
+                  <p><strong>Company:</strong> {job.company}</p>
+                  <p><strong>Location:</strong> {job.location}</p>
+                  <p><strong>Type:</strong> {job.jobType}</p>
+                  <p><strong>Pay:</strong> {job.pay}</p>
+                </div>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </div>
-      )}
-      {/* Edit job form */}
+        <div className="job-details-container">
+          {selectedJob ? (
+            <div className="job-details">
+              <h3>Selected Job Details</h3>
+              {Object.entries(selectedJob).map(([key, value]) => (
+                <p key={key}>
+                  <strong>{key}:</strong> {value}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <p>Select a job to see the details</p>
+          )}
+        </div>
+      </div>
       {editMode && editJob && (
         <div className="edit-job-form">
           <h3>Edit Job</h3>

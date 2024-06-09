@@ -1,21 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header/Header'; // Import the Header component
+import Header from './components/Header/Header';
 import PostJobForm from './components/PostJobForm/PostJobForm';
 import PostCandidatesForm from './components/PostCandidateForm/PostCandidateForm';
 import JobPostData from './components/JobPostData/JobPostData';
 import CandidateData from './components/CandidateData/CandidateData';
-import EmployerCarousel from './components/EmployerCarousel/EmployerCarousel';
-import CandidateCarousel from './components/CandidateCarousel/CandidateCarousel';
+import Employer from './components/Employer/Employer';
 import Home from './components/Home/Home';
-import ClientReview from './components/ClientReview/ClientReview';
-import './App.scss'; // Global styles
+import Candidates from './components/Candidates/Candidates'; // Import the Candidates component
+import './App.scss';
 
 const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <Header /> {/* Include the Header component */}
+        <Header />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -23,9 +22,9 @@ const App = () => {
             <Route path="/jobs" element={<JobPostData />} />
             <Route path="/candidates" element={<CandidateData />} />
             <Route path="/post-candidate" element={<PostCandidatesForm />} />
-            
+            <Route path="/employer" element={<Employer />} />
+            <Route path="/candidate-dashboard" element={<Candidates />} /> {/* Add this route */}
           </Routes>
-
         </main>
         <footer className="footer">
           <p>&copy; 2024 CohortHire. All rights reserved by DevOrbs.</p>

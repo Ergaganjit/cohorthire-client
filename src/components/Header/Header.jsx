@@ -10,16 +10,16 @@ const Header = () => {
       </div>
       <ul className="navbar-menu">
         <li>
-          <Link to="/post-job">Post a Job</Link>
+          <Link to="/employer">Employer</Link>
         </li>
         <li>
-          <Link to="/jobs">Job Listings</Link>
+          <Link to="/post-candidate">Candidate/Apply Job</Link>
         </li>
         <li>
           <Link to="/candidates">Candidate Listings</Link>
         </li>
         <li>
-          <Link to="/post-candidate">Post a Candidate</Link>
+          <Link to="/candidate-dashboard">Candidates</Link>
         </li>
       </ul>
     </nav>
