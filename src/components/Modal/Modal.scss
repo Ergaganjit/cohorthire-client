@@ -14,15 +14,20 @@
   }
   
   .modal-content {
-    background-color: #fefefe;
+    background-color: rgb(217 207 200);
     padding: 20px;
-    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 8px 9px 15px rgb(12 7 4);
     max-width: 600px;
+    width: 90%;
+    position: relative;
   }
   
   .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     color: #aaa;
-    float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -31,7 +36,5 @@
   .close:hover,
   .close:focus {
     color: black;
-    text-decoration: none;
-    cursor: pointer;
   }
   
