@@ -84,23 +84,6 @@
         font-size: 18px;
         color: #333;
       }
-
-      .job-card-actions {
-        button {
-          border: none;
-          background: none;
-          cursor: pointer;
-          padding: 5px;
-          margin: 0 5px;
-          font-size: 18px;
-          color: #6c757d;
-          transition: color 0.3s;
-
-          &:hover {
-            color: #007bff;
-          }
-        }
-      }
     }
 
     p {
@@ -148,12 +131,6 @@
     }
   }
 
-  .edit-job-form {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 800px;
-  }
-
   .job-card-enter {
     opacity: 0;
     transform: translateY(10px);
@@ -195,4 +172,3 @@
     }
   }
 }
-

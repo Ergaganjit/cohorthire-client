@@ -7,7 +7,8 @@ import JobPostData from './components/JobPostData/JobPostData';
 import CandidateData from './components/CandidateData/CandidateData';
 import Employer from './components/Employer/Employer';
 import Home from './components/Home/Home';
-import Candidates from './components/Candidates/Candidates'; // Import the Candidates component
+import Candidates from './components/Candidates/Candidates';
+import JobPostDataCandidates from './components/JobPostData/JobPostDataCandidates';
 import './App.scss';
 
 const App = () => {
@@ -23,7 +24,8 @@ const App = () => {
             <Route path="/candidates" element={<CandidateData />} />
             <Route path="/post-candidate" element={<PostCandidatesForm />} />
             <Route path="/employer" element={<Employer />} />
-            <Route path="/candidate-dashboard" element={<Candidates />} /> {/* Add this route */}
+            <Route path="/candidate-dashboard" element={<Candidates />} />
+            <Route path="/job-postings-candidates" element={<JobPostDataCandidates />} /> {/* New route */}
           </Routes>
         </main>
         <footer className="footer">
