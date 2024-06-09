@@ -1,0 +1,104 @@
+.candidates-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+    height: 100vh;
+  
+    .candidates-content {
+      flex: 1.5;
+      margin-right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Align text to the left */
+      animation: slideInLeft 0.5s ease-in-out;
+      transition: opacity 0.5s ease-in-out;
+  
+      .candidates-title {
+        font-size: 48px; /* Increase font size */
+        color: #333; /* Change color to a darker shade */
+        margin-bottom: 20px;
+        font-weight: bold; /* Make the title bold */
+        animation: fadeInUp 1s ease-in-out; /* Add animation */
+      }
+  
+      .candidates-description {
+        font-size: 24px; /* Increase font size */
+        color: #666; /* Change color to a slightly darker shade */
+        margin-bottom: 30px;
+        animation: fadeInUp 1.2s ease-in-out; /* Add animation */
+      }
+  
+      .candidates-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Add space between links */
+        margin-left: -10px; /* Adjust margin to align with cards */
+        animation: fadeInUp 1.4s ease-in-out; /* Add animation */
+  
+        li {
+          width: 100%; /* Make links take full width */
+        }
+  
+        a {
+          text-decoration: none;
+          font-size: 20px; /* Increase font size */
+          color: #fff; /* Change color to white */
+          background-color: rgb(148, 78, 28);
+          padding: 20px;
+          border-radius: 10px;
+          display: block;
+          transition: all 0.3s ease;
+  
+          &:hover {
+            background-color: #d4ab8e;
+          }
+        }
+      }
+    }
+  
+    .candidates-image {
+      flex: 2;
+      img {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+    }
+  
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px); /* Move element down */
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0); /* Move element up */
+      }
+    }
+  }
+  

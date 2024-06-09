@@ -60,7 +60,7 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
 
   return (
     <div className="form-container">
-      <h2>{formData.id ? 'Edit Candidate' : 'Post a Candidate'}</h2>
+      <h2>{formData.id ? 'Edit Candidate' : 'Apply job'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>

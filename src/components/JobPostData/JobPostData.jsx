@@ -3,8 +3,7 @@ import axios from 'axios';
 import './JobPostData.scss';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import PostJobForm from '../PostJobForm/PostJobForm';
-import Modal from '../Modal/Modal';
-import { CSSTransition } from 'react-transition-group'; // Import CSSTransition
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const JobPostData = () => {
   const [jobs, setJobs] = useState([]);
@@ -13,7 +12,6 @@ const JobPostData = () => {
   const [error, setError] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editJob, setEditJob] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -34,7 +32,6 @@ const JobPostData = () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
       setSelectedJob(response.data);
-      setIsModalOpen(true);
     } catch (err) {
       setError(err);
     }
@@ -85,59 +82,58 @@ const JobPostData = () => {
 
   return (
     <div className="job-post-data">
-    <h2>Job Listings</h2>
-    <table className="job-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Company</th>
-          <th>Location</th>
-          <th>Type</th>
-          <th>Pay</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {jobs.map((job) => (
-          <tr key={job.id} onClick={() => handleJobClick(job.id)}>
-            <td>{job.id}</td>
-            <td>{job.jobTitle}</td>
-            <td>{job.company}</td>
-            <td>{job.location}</td>
-            <td>{job.jobType}</td>
-            <td>{job.pay}</td>
-            <td>
-              <button onClick={(event) => handleDelete(job.id, event)}>
-                <FaTrash />
-              </button>
-              <button onClick={(event) => handleEdit(job.id, event)}>
-                <FaEdit />
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    {isModalOpen && selectedJob && (
-      <Modal onClose={() => setIsModalOpen(false)}>
-        <div className="job-details">
-          <h3>Selected Job Details</h3>
-          {Object.entries(selectedJob).map(([key, value]) => (
-            <p key={key}>
-              <strong>{key}:</strong> {value}
-            </p>
-          ))}
-        </div>
-      </Modal>
-    )}
-    {editMode && editJob && (
-      <div className="edit-job-form">
-        <h3>Edit Job</h3>
-        <PostJobForm jobData={editJob} onCancelEdit={handleCancelEdit} />
+      <div className="job-listing-header">
+        <h2 className="welcome-message">Hello Employer!</h2>
+        <p className="instruction-message">You can view your posts, edit job postings, and delete them if vacancies are filled.</p>
       </div>
-    )}
-  </div>
+      <div className="job-container">
+        <div className="job-list">
+          <TransitionGroup>
+            {jobs.map((job) => (
+              <CSSTransition key={job.id} timeout={500} classNames="job-card">
+                <div className="job-card" onClick={() => handleJobClick(job.id)}>
+                  <div className="job-card-header">
+                    <h3>{job.jobTitle}</h3>
+                    <div className="job-card-actions">
+                      <button onClick={(event) => handleDelete(job.id, event)}>
+                        <FaTrash />
+                      </button>
+                      <button onClick={(event) => handleEdit(job.id, event)}>
+                        <FaEdit />
+                      </button>
+                    </div>
+                  </div>
+                  <p><strong>Company:</strong> {job.company}</p>
+                  <p><strong>Location:</strong> {job.location}</p>
+                  <p><strong>Type:</strong> {job.jobType}</p>
+                  <p><strong>Pay:</strong> {job.pay}</p>
+                </div>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        </div>
+        <div className="job-details-container">
+          {selectedJob ? (
+            <div className="job-details">
+              <h3>Selected Job Details</h3>
+              {Object.entries(selectedJob).map(([key, value]) => (
+                <p key={key}>
+                  <strong>{key}:</strong> {value}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <p>Select a job to see the details</p>
+          )}
+        </div>
+      </div>
+      {editMode && editJob && (
+        <div className="edit-job-form">
+          <h3>Edit Job</h3>
+          <PostJobForm jobData={editJob} onCancelEdit={handleCancelEdit} />
+        </div>
+      )}
+    </div>
   );
 };
 
