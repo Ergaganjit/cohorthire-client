@@ -13,10 +13,10 @@ const Employer = () => {
         </p>
         <ul className="employer-options">
           <li>
-            <a href="/post-job">Post a Job</a>
+            <a href="/employer/job/new">Post a Job</a>
           </li>
           <li>
-            <a href="/jobs">View Job Posts</a>
+            <a href="/employer/jobs">View Job Posts</a>
           </li>
           <li>
             <a href="/blog">Publish a Blog</a>

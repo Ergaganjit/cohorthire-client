@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
+@import "../../styles/variables";
 .home-container {
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@
       gap: 1rem;
 
       button {
-        background-color:rgb(148, 78, 28);
+        background-color:$primary-color;
         border: none;
         padding: 1rem 2rem;
         border-radius: 5px;
@@ -204,13 +204,9 @@ $animationSpeed: 40s;
   }
   
   .modal {
-    // background:rgb(148, 78, 28);
     padding: 1rem;
     border-radius: 10px;
-    // max-width: 500px;
     width: 100%;
-    // position: relative;
-    
   }
   
   .form-container {

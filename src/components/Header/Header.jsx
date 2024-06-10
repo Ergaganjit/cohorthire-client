@@ -9,17 +9,14 @@ const Header = () => {
         <Link to="/">CohortHire</Link>
       </div>
       <ul className="navbar-menu">
+      <li>
+          <Link to="/">Home</Link>
+        </li>
         <li>
           <Link to="/employer">Employer</Link>
         </li>
         <li>
-          <Link to="/post-candidate">Candidate/Apply Job</Link>
-        </li>
-        <li>
-          <Link to="/candidates">Candidate Listings</Link>
-        </li>
-        <li>
-          <Link to="/candidate-dashboard">Candidates</Link>
+          <Link to="/candidate">Jobs</Link>
         </li>
       </ul>
     </nav>

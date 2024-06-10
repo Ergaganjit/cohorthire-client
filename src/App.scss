@@ -1,5 +1,5 @@
+@import "../src/styles/variables";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,8 +8,6 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  // background-color: rgb(197 157 129);
-  color: #333;
 }
 
 .app-container {
@@ -21,12 +19,12 @@ body {
 .main-content {
   flex: 1;
 
-  background-color: rgb(223, 214, 203);
+  background-color: $Secondary-color;
 }
 
 .footer {
-  background-color:rgb(148, 78, 28);
-  color: #fff;
+  background-color:$primary-color;
+  color: $pure-white;
   text-align: center;
   padding: 1rem;
 }

@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './PostCandidateForm'; // Import your SCSS file
+import './PostCandidateForm.scss';
+import { useParams } from 'react-router-dom';
 
-const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
-  const [formData, setFormData] = useState(candidateData || {
+
+
+const PostCandidatesForm = () => {
+  const { jobId } = useParams();
+  console.log("applying for job: ", jobId);
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    jobId: '',
-    applicationDate: '',
-    status: ''
+    resume: '',
+    coverLetter: '',
+    status: 'applied',
+    jobId: jobId // Include jobId in the initial formData
   });
 
   const handleChange = (e) => {
@@ -23,44 +29,30 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = formData.id
-        ? `http://127.0.0.1:8787/api/candidates/${formData.id}`
-        : 'http://127.0.0.1:8787/api/candidates';
-
-      // console.log("formData: ",formData);
-      // const method = formData.id ? 'put' : 'post';
-      const method = "POST";
-      console.log("method: ",method);
-
-      await axios({
-        method,
-        url,
-        data: formData,
+      await axios.post(process.env.REACT_APP_BACKEND_SERVER_URL+'/api/candidates', formData, { // Send formData including jobId
         headers: {
           'Content-Type': 'application/json',
         }
       });
-
-      // Optionally, reset the form data after successful submission
       setFormData({
         name: '',
         email: '',
         phone: '',
-        jobId: '',
-        applicationDate: '',
-        status: ''
+        resume: '',
+        coverLetter: '',
+        status: 'applied',
+        jobId: jobId // Reset jobId in formData
       });
-
-      alert('Form submitted successfully');
+      alert('Application submitted successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Failed to submit form. Please try again later.');
+      alert('Failed to submit application. Please try again later.');
     }
   };
 
   return (
     <div className="form-container">
-      <h2>{formData.id ? 'Edit Candidate' : 'Apply job'}</h2>
+      <h2>Apply for the Job</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>
@@ -75,22 +67,15 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
           <input type="text" name="phone" value={formData.phone} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label>Job ID:</label>
-          <input type="text" name="jobId" value={formData.jobId} onChange={handleChange} required />
+          <label>Resume:</label>
+          <input type="text" name="resume" value={formData.resume} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label>Application Date:</label>
-          <input type="date" name="applicationDate" value={formData.applicationDate} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Status:</label>
-          <input type="text" name="status" value={formData.status} onChange={handleChange} required />
+          <label>Cover Letter:</label>
+          <textarea name="coverLetter" value={formData.coverLetter} onChange={handleChange} required />
         </div>
         <div className="form-actions">
-          <button type="submit">{formData.id ? 'Update' : 'Submit'}</button>
-          {formData.id && (
-            <button type="button" onClick={onCancelEdit}>Cancel</button>
-          )}
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -98,3 +83,4 @@ const PostCandidatesForm = ({ candidateData, onCancelEdit }) => {
 };
 
 export default PostCandidatesForm;
+

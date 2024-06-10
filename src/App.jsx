@@ -7,7 +7,9 @@ import JobPostData from './components/JobPostData/JobPostData';
 import CandidateData from './components/CandidateData/CandidateData';
 import Employer from './components/Employer/Employer';
 import Home from './components/Home/Home';
-import Candidates from './components/Candidates/Candidates'; // Import the Candidates component
+import Candidates from './components/Candidates/Candidates';
+import JobPostDataCandidates from './components/JobPostData/JobPostDataCandidates';
+import Admin from './components/Admin/Admin';
 import './App.scss';
 
 const App = () => {
@@ -18,12 +20,16 @@ const App = () => {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/post-job" element={<PostJobForm />} />
-            <Route path="/jobs" element={<JobPostData />} />
-            <Route path="/candidates" element={<CandidateData />} />
-            <Route path="/post-candidate" element={<PostCandidatesForm />} />
+            <Route path="/employer/job/new" element={<PostJobForm />} />
+            <Route path="/employer/jobs" element={<JobPostData />} />
+            <Route path="/candidates-list" element={<CandidateData />} />
+            {/* <Route path="/post-candidate" element={<PostCandidatesForm />} /> */}
+            <Route path="/post-candidate/:jobId" Component={PostCandidatesForm} />
             <Route path="/employer" element={<Employer />} />
-            <Route path="/candidate-dashboard" element={<Candidates />} /> {/* Add this route */}
+            <Route path="/candidate" element={<Candidates />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/candidate/jobs" element={<JobPostDataCandidates />} /> {/* New route */}
+
           </Routes>
         </main>
         <footer className="footer">
@@ -33,5 +39,6 @@ const App = () => {
     </Router>
   );
 };
+
 
 export default App;
