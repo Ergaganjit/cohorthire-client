@@ -17,7 +17,7 @@ const JobPostData = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8787/api/jobs');
+        const response = await axios.get(process.env.REACT_APP_BACKEND_SERVER_URL+'/api/jobs');
         setJobs(response.data);
         setLoading(false);
       } catch (err) {
@@ -31,7 +31,7 @@ const JobPostData = () => {
 
   const handleJobClick = async (jobId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}`);
       setSelectedJob(response.data);
     } catch (err) {
       setError(err);
@@ -41,7 +41,7 @@ const JobPostData = () => {
   const handleDelete = async (jobId, event) => {
     event.stopPropagation();
     try {
-      await axios.delete(`http://127.0.0.1:8787/api/jobs/${jobId}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}`);
       setJobs(jobs.filter(job => job.id !== jobId));
       setSelectedJob(null);
     } catch (err) {
@@ -52,7 +52,7 @@ const JobPostData = () => {
   const handleEdit = async (jobId, event) => {
     event.stopPropagation();
     try {
-      const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}`);
       const editedJob = response.data;
       const updatedJobs = jobs.map(job => {
         if (job.id === editedJob.id) {
@@ -71,24 +71,6 @@ const JobPostData = () => {
   const handleCancelEdit = () => {
     setEditMode(false);
     setEditJob(null);
-  };
-
-  const handleApplication = async (jobId) => {
-    try {
-      await axios.post(`http://127.0.0.1:8787/api/jobs/${jobId}/apply`);
-          setJobs(prevJobs =>
-      prevJobs.map(job => {
-        if (job.id === jobId) {
-          toast.success('Application submitted successfully');
-          return { ...job, applications: (job.applications || 0) + 1 }; // Increment count
-        }
-        return job;
-      })
-    );
-  } catch (err) {
-      setError(err);
-      toast.error('Failed to submit application');
-    }
   };
 
   return (
@@ -111,7 +93,7 @@ const JobPostData = () => {
                     <FaEdit />
                   </button>
                   <div className="application-count">
-                    <FaUserCheck /> {job.applications || 0}
+                    <FaUserCheck /> {job.candidateCount}
                   </div>
                 </div>
               </div>

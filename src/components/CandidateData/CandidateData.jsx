@@ -15,7 +15,7 @@ const CandidateData = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8787/api/candidates');
+        const response = await axios.get(process.env.REACT_APP_BACKEND_SERVER_URL+'/api/candidates');
         // Ensure the response data is an array
         if (Array.isArray(response.data)) {
           setCandidates(response.data);
@@ -34,7 +34,7 @@ const CandidateData = () => {
 
   const handleCandidateClick = async (candidateId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8787/api/candidates/${candidateId}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/candidates/${candidateId}`);
      console.log(setSelectedCandidate(response.data));
     } catch (err) {
       setError(err);
@@ -43,7 +43,7 @@ const CandidateData = () => {
 
   const handleDelete = async (candidateId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8787/api/candidates/${candidateId}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/candidates/${candidateId}`);
       setCandidates(candidates.filter(candidate => candidate.id !== candidateId));
       setSelectedCandidate(null); // Clear selected candidate after deletion
     } catch (err) {
@@ -53,7 +53,7 @@ const CandidateData = () => {
 
   const handleEdit = async (candidateId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8787/api/candidates/${candidateId}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/candidates/${candidateId}`);
       setEditCandidate(response.data); // Set candidate data for editing
       setEditMode(true); // Activate edit mode
     } catch (err) {
@@ -63,7 +63,7 @@ const CandidateData = () => {
 
   const handleSaveEdit = async (updatedCandidate) => {
     try {
-      await axios.put(`http://127.0.0.1:8787/api/candidates/${updatedCandidate.id}`, updatedCandidate);
+      await axios.put(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/candidates/${updatedCandidate.id}`, updatedCandidate);
       const updatedCandidates = candidates.map(candidate => candidate.id === updatedCandidate.id ? updatedCandidate : candidate);
       setCandidates(updatedCandidates);
       setEditMode(false); // Deactivate edit mode

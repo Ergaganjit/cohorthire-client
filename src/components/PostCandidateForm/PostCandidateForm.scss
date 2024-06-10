@@ -1,5 +1,5 @@
 // PostCandidateForm.scss
-
+@import "../../styles/variables";
 .form-container {
   max-width: 600px;
   margin: 0 auto;
@@ -37,7 +37,7 @@ h2 {
     transition: border-color 0.3s ease;
 
     &:focus {
-      border-color: rgb(148, 78, 28);
+      border-color: $primary-color;
       outline: none;
     }
   }

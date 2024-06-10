@@ -12,7 +12,7 @@ const JobPostDataCandidates = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8787/api/jobs');
+        const response = await axios.get(process.env.REACT_APP_BACKEND_SERVER_URL+'/api/jobs');
         setJobs(response.data);
         setLoading(false);
       } catch (err) {
@@ -27,7 +27,7 @@ const JobPostDataCandidates = () => {
   const handleJobClick = async (jobId) => {
     try {
       // console.log(`Applying for job with ID: ${jobId}`);
-      const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}`);
       setSelectedJob(response.data);
     } catch (err) {
       setError(err);

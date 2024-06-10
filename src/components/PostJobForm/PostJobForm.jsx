@@ -42,8 +42,8 @@ const PostJobForm = ({ jobData, onCancelEdit }) => {
     e.preventDefault();
     try {
       const url = formData.id
-        ? `http://127.0.0.1:8787/api/jobs/${formData.id}`
-        : 'http://127.0.0.1:8787/api/jobs';
+        ? `${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${formData.id}`
+        : process.env.REACT_APP_BACKEND_SERVER_URL+'/api/jobs';
 
       const method = formData.id ? 'put' : 'post';
 

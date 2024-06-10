@@ -1,22 +1,16 @@
-// @font-face {
-//     font-family: "Cabin";
-//     src: url("/assets/fonts/Cabin/Cabin-VariableFont.ttf") format("truetype");
-//     font-style: normal;
-// }
+@font-face {
+    font-family: "OleoScript";
+    src: url("../assets/fonts/Oleo/OleoScript-Bold.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
 
-// @font-face {
-//     font-family: "Oleo";
-//     src: url("/assets/fonts/Oleo/OleoScript-Bold.ttf") format("truetype");
-//     font-weight: 800;
-//     font-style: normal;
-// }
-
-// @font-face {
-//     font-family: "Oleo";
-//     src: url("/assets/fonts/Oleo/OleoScript-Regular.ttf") format("truetype");
-//     font-weight: 400;
-//     font-style: normal;
-// }
+@font-face {
+    font-family: "Oleo";
+    src: url("../assets/fonts/Oleo/OleoScript-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
 
 // @mixin font-mobile-h1 {
 //     font-family: Oleo;

@@ -29,7 +29,7 @@ const PostCandidatesForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8787/api/candidates', formData, { // Send formData including jobId
+      await axios.post(process.env.REACT_APP_BACKEND_SERVER_URL+'/api/candidates', formData, { // Send formData including jobId
         headers: {
           'Content-Type': 'application/json',
         }

@@ -1,4 +1,5 @@
 // Form.scss
+@import "../../styles/variables";
 .form-container {
     max-width: 500px;
     margin: 0 auto;
@@ -42,7 +43,7 @@
       display: block;
       width: 100%;
       padding: 10px;
-      background-color: rgb(148, 78, 28);
+      background-color: $primary-color;
       color: #fff;
       border: none;
       border-radius: 5px;
