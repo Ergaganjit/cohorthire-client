@@ -1,3 +1,6 @@
+# Deployment
+App is deployed using Cloudflare workers and pages, and can be accessed at following url: https://cohorthire-client.pages.dev/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
