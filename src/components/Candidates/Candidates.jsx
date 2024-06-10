@@ -16,7 +16,7 @@ const Candidates = () => {
             <Link to="/post-candidate">Register Profile</Link>
           </li>
           <li>
-            <Link to="/job-postings-candidates">View Jobs</Link> {/* Updated link */}
+            <Link to="/candidate/jobs">View Jobs</Link> {/* Updated link */}
           </li>
           <li>
             <Link to="/tech-news">Tech News</Link>

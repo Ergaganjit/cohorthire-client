@@ -26,6 +26,7 @@ const JobPostDataCandidates = () => {
 
   const handleJobClick = async (jobId) => {
     try {
+      // console.log(`Applying for job with ID: ${jobId}`);
       const response = await axios.get(`http://127.0.0.1:8787/api/jobs/${jobId}`);
       setSelectedJob(response.data);
     } catch (err) {
@@ -60,7 +61,7 @@ const JobPostDataCandidates = () => {
               <p><strong>Pay:</strong> {job.pay}</p>
               <div className="applications-count">Applications: {job.applications || 0}</div>
               {/* Link to the post candidate page */}
-              <Link to="/post-candidate">Apply</Link>
+              <Link to={`/post-candidate/${job.id}`}>Apply</Link>
             </div>
           ))}
         </div>
@@ -84,3 +85,7 @@ const JobPostDataCandidates = () => {
 };
 
 export default JobPostDataCandidates;
+
+
+
+

@@ -76,16 +76,16 @@ const JobPostData = () => {
   const handleApplication = async (jobId) => {
     try {
       await axios.post(`http://127.0.0.1:8787/api/jobs/${jobId}/apply`);
-      setJobs(prevJobs =>
-        prevJobs.map(job => {
-          if (job.id === jobId) {
-            toast.success('Application submitted successfully');
-            return { ...job, applications: job.applications + 1 };
-          }
-          return job;
-        })
-      );
-    } catch (err) {
+          setJobs(prevJobs =>
+      prevJobs.map(job => {
+        if (job.id === jobId) {
+          toast.success('Application submitted successfully');
+          return { ...job, applications: (job.applications || 0) + 1 }; // Increment count
+        }
+        return job;
+      })
+    );
+  } catch (err) {
       setError(err);
       toast.error('Failed to submit application');
     }

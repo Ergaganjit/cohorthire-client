@@ -1,17 +1,21 @@
-// PostCandidatesForm.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import './PostCandidateForm.scss';
+import { useParams } from 'react-router-dom';
 
-const PostCandidatesForm = ({ jobId, onCancelApply }) => {
+
+
+const PostCandidatesForm = () => {
+  const { jobId } = useParams();
+  console.log("applying for job: ", jobId);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     resume: '',
     coverLetter: '',
-    status: 'applied'
+    status: 'applied',
+    jobId: jobId // Include jobId in the initial formData
   });
 
   const handleChange = (e) => {
@@ -25,16 +29,20 @@ const PostCandidatesForm = ({ jobId, onCancelApply }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://127.0.0.1:8787/api/candidates`, { ...formData, jobId });
+      await axios.post('http://127.0.0.1:8787/api/candidates', formData, { // Send formData including jobId
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       setFormData({
         name: '',
         email: '',
         phone: '',
         resume: '',
         coverLetter: '',
-        status: 'applied'
+        status: 'applied',
+        jobId: jobId // Reset jobId in formData
       });
-      onCancelApply();
       alert('Application submitted successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -68,7 +76,6 @@ const PostCandidatesForm = ({ jobId, onCancelApply }) => {
         </div>
         <div className="form-actions">
           <button type="submit">Submit</button>
-          <button type="button" onClick={onCancelApply}>Cancel</button>
         </div>
       </form>
     </div>
@@ -76,3 +83,4 @@ const PostCandidatesForm = ({ jobId, onCancelApply }) => {
 };
 
 export default PostCandidatesForm;
+
