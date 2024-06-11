@@ -6,69 +6,143 @@ App backend is deployed using Cloudflare Workers.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# CohortHire
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+CohortHire is a web application designed to streamline the job application process for employers and candidates. Employers can post job openings and manage applications efficiently. The unique cohort processing feature ensures that applications are reviewed in groups of six, streamlining the candidate selection criteria, ensuring a fair and organized review process.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+CohortHire Server -https://github.com/Ergaganjit/cohorthire-server
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Problem
 
-### `npm test`
+Employers often face challenges in managing large volumes of job applications, leading to inefficiencies and potential oversight of qualified candidates. Job seekers also struggle with the uncertainty of application statuses and delayed responses. This job portal aims to address these issues with a structured cohort-based processing system.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### User Profile
 
-### `npm run build`
+Employers:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+HR managers and recruiters looking to hire candidates.
+Users who require an efficient system to handle large volumes of applications.
+Users who prefer a structured cohort-based approach to review applications.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Features
 
-### `npm run eject`
+Job Posting: Employers can create and publish job listings.
+Edit Job Postings: Employers can edit existing job listings.
+Delete Job Postings: Employers can delete job listings.
+View Job Postings: Employers can view all their job listings.
+Employer gets the count of candidates applied for the job. 
+Cohort Application Review: Applications are reviewed in groups of six. Employers must process or reject all six applications in the current cohort before moving on to the next set of applications.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Candidates feature: 
+View Job Postings: Employers can view all their job listings.
+Apply for job:Candidate can apply for the selected job. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Implementation
 
-## Learn More
+### Tech Stack
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Frontend: React.js
+Backend:Cloudflare worker and pages
+Database: D1 database in Cloudflare
+Authentication: JSON Web Tokens (JWT)
+Hosting: Cloudflare
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+### Sitemap
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+As a single-page application, navigation between different views will be handled on the client-side without full-page reloads.
 
-### Analyzing the Bundle Size
+Home View: Introduction and navigation.
+Employer Dashboard View: Company profile, job postings, cohort-based application processing, and application management(CRUD)
+Candidate Dashboard: Register, Apply for job, View available jobs.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Mockups
 
-### Making a Progressive Web App
+Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![alt text](image-1.png)
 
-### Advanced Configuration
+### Data
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Jobs Table:
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+  jobTitle TEXT NOT NULL,
+  company TEXT NOT NULL,
+  numberOfOpenings INTEGER NOT NULL,
+  country TEXT NOT NULL,
+  language TEXT NOT NULL,
+  location TEXT NOT NULL,
+  jobType TEXT NOT NULL,
+  schedule TEXT NOT NULL,
+  pay TEXT NOT NULL,
+  supplementalPay TEXT,
+  benefits TEXT,
+  jobDescription TEXT NOT NULL,
+  applicationMethod TEXT NOT NULL,
+  requireResume INTEGER NOT NULL,
+  applicationUpdates INTEGER NOT NULL,
+  candidatesContactEmail TEXT NOT NULL,
+  applicationDeadline DATE NOT NULL,
+  candidatesContactPhone TEXT NOT NULL,
+  flexibleLanguageRequirement INTEGER NOT NULL,
+  hiringTimeline TEXT NOT NULL,
+  expectedStartDate DATE NOT NULL,
+  sponsorship INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-### Deployment
+  Candidates:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  resume TEXT,
+  coverLetter TEXT,
+  applicationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status TEXT DEFAULT 'applied'
 
-### `npm run build` fails to minify
+### Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Job Postings:
+POST /employer/job/new: Create a new job posting.
+GET employer/jobs: Retrieve all job postings.
+GET employer/jobs/:id: Retrieve a specific job posting.
+PUT employer/jobs/:id: Update a specific job posting.
+DELETE employer/jobs/:id: Delete a specific job posting.
+
+Candidates portal:
+POST /post-candidate: Create a new job posting.
+GET candiate/jobs: Retrieve all job postings.
+GET candidate/jobs/:id: Retrieve a specific job posting.
+
+## Roadmap
+
+Week 1 (May 28 - June 2)
+Set up project structure and environment.
+Develop backend endpoints for job postings (create, read, update, delete).
+Implement employer profile management.
+
+Week 2 (June 3 - June 8)
+Implement job postings management in the frontend.
+Develop cohort-based application processing logic in the backend.
+
+Week 3 (June 9)
+Finalize application review process in the frontend.
+Perform testing and bug fixing.
+Prepare documentation and final presentation.
+Deploy the application.
+
+## Nice-to-haves
+
+Login/sign up for employer
+Integration with LinkedIn API for job data.
+Notifications for employers when new applications are received.
+Enhanced analytics for job postings and application statuses.
+Resume parsing to automatically extract information from uploaded resumes.
+
