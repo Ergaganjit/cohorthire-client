@@ -1,5 +1,6 @@
 # Deployment
-App is deployed using Cloudflare workers and pages, and can be accessed at following url: https://cohorthire-client.pages.dev/
+App frontend is deployed using Cloudflare pages, and can be accessed at following url: https://cohorthire-client.pages.dev/
+App backend is deployed using Cloudflare Workers.
 
 # Getting Started with Create React App
 
