@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Candidates.scss';
 import candidateImage from '../../assets/images/front page.webp';
 import { Link } from 'react-router-dom';
+import AppliedJobsList from '../AppliedJobList/AppliedJobList'; // Import AppliedJobsList component
 
 const Candidates = () => {
+  const [candidateId, setCandidateId] = useState('');
+  const [showAppliedJobs, setShowAppliedJobs] = useState(false);
+
+  const handleCandidateIdChange = (e) => {
+    setCandidateId(e.target.value);
+  };
+
+  const handleViewAppliedJobs = () => {
+    setShowAppliedJobs(true);
+  };
+
   return (
     <div className="candidates-container">
       <div className="candidates-content">
@@ -16,18 +28,28 @@ const Candidates = () => {
             <Link to="/post-candidate">Register Profile</Link>
           </li>
           <li>
-            <Link to="/candidate/jobs">View Jobs</Link> {/* Updated link */}
+            <Link to="/candidate/jobs">View All Jobs</Link> {/* Updated link */}
           </li>
           <li>
-            <Link to="/tech-news">Tech News</Link>
+            <button onClick={handleViewAppliedJobs}>View Applied Jobs</button> {/* Use button for action */}
           </li>
         </ul>
+        {showAppliedJobs && (
+          <div>
+            <label>
+              Enter Candidate ID:
+              <input
+                type="text"
+                value={candidateId}
+                onChange={handleCandidateIdChange}
+              />
+            </label>
+            <AppliedJobsList candidateId={candidateId} /> {/* Pass candidateId to AppliedJobsList */}
+          </div>
+        )}
       </div>
       <div className="candidates-image">
-        <img
-          src={candidateImage}
-          alt="Candidates"
-        />
+        <img src={candidateImage} alt="Candidates" />
       </div>
     </div>
   );

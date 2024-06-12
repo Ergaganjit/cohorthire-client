@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { toast } from 'react-toastify';
 import './JobPostData.scss';
 import PostJobForm from '../PostJobForm/PostJobForm';
 import { FaTrash, FaEdit, FaUserCheck } from 'react-icons/fa';
@@ -13,7 +12,9 @@ const JobPostData = () => {
   const [error, setError] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editJob, setEditJob] = useState(null);
-  const [showAllCandidates, setShowAllCandidates] = useState(false); // State to control whether to show all candidates
+  const [currentPage, setCurrentPage] = useState(0);
+  const [candidatesPerPage] = useState(6);
+  const [warningMessage, setWarningMessage] = useState("");
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -37,7 +38,6 @@ const JobPostData = () => {
 
       const jobData = jobResponse.data;
       jobData.candidates = candidateResponse.data;
-      console.log(jobData.c)
 
       setSelectedJob(jobData);
     } catch (err) {
@@ -92,68 +92,35 @@ const JobPostData = () => {
         })
       }));
 
-      console.log('candidateId',candidateId);
-
       const formData = {
         jobId: jobId,
         candidateId: candidateId,
         newStatus: newStatus
-      }
+      };
 
       await axios.patch(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}/candidates`, formData, {
-        headers:{
+        headers: {
           'Content-Type': 'application/json',
         }
       });
-      
 
-      if (newStatus === 'rejected' && selectedJob.candidates.every(candidate => candidate.status === 'rejected')) {
-        setShowAllCandidates(true); // Show all candidates once all initial candidates are rejected
-      }
+      setWarningMessage("");
     } catch (err) {
       setError(err);
     }
   };
 
-  // const handleStatusChange = async (jobId, candidateId, newStatus) => {
-  //   try {
-  //     const updatedJobs = jobs.map(job => {
-  //       if (job.id === jobId) {
-  //         return {
-  //           ...job,
-  //           candidates: job.candidates.map(candidate => {
-  //             if (candidate.id === candidateId) {
-  //               return { ...candidate, status: newStatus };
-  //             }
-  //             return candidate;
-  //           })
-  //         };
-  //       }
-  //       return job;
-  //     });
-  
-  //     setJobs(updatedJobs);
-  
-  //     const formData = {
-  //       jobId: jobId,
-  //       candidateId: candidateId,
-  //       newStatus: newStatus
-  //     };
-  
-  //     await axios.patch(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}/candidates`, formData, {
-  //       headers:{
-  //         'Content-Type': 'application/json',
-  //       }
-  //     });
-  
-  //     if (newStatus === 'rejected' && updatedJobs.some(job => job.id === jobId && job.candidates.every(candidate => candidate.status === 'rejected'))) {
-  //       setShowAllCandidates(true); // Show all candidates once all initial candidates are rejected
-  //     }
-  //   } catch (err) {
-  //     setError(err);
-  //   }
-  // };
-  
+  const handleLoadMore = () => {
+    const currentCandidates = selectedJob.candidates.slice(0, candidatesPerPage);
+    const allRejected = currentCandidates.every(candidate => candidate.status === 'rejected');
+
+    if (allRejected) {
+      setCurrentPage(prevPage => prevPage + 1);
+      setWarningMessage("");
+    } else {
+      setWarningMessage("Warning: Review Pending for First Cohort List");
+    }
+  };
 
   return (
     <div className="job-post-data">
@@ -202,67 +169,64 @@ const JobPostData = () => {
               <p><strong>Type:</strong> {selectedJob.jobType}</p>
               <p><strong>Pay:</strong> {selectedJob.pay}</p>
 
-              {selectedJob.candidates && selectedJob.candidates.length > 0 ? (
+              {selectedJob.candidates && selectedJob.candidates.length >= 0 ? (
                 <div className="candidate-list">
                   <h3>Candidates for Selected Job</h3>
                   <ul>
                     <TransitionGroup>
-                      {selectedJob.candidates.map((candidate, index) => (
-                        // Only render the first six candidates initially or if showAllCandidates is true
-                        (index < 6 || showAllCandidates) && (
-                          <CSSTransition key={candidate.id} timeout={300} classNames="candidate">
-                            <li key={candidate.id}>
-                              <div className="candidate-info">
-                                <div>
-                                  <strong>Name:</strong> {candidate.name}
-                                </div>
-                                <div>
-                                  <strong>Email:</strong> {candidate.email}
-                                </div>
-                                <div>
-                                  <strong>Phone:</strong> {candidate.phone}
-                                </div>
-                                <div>
-                                  <strong>Resume:</strong> {candidate.resume}
-                                </div>
-                                <div>
-                                  <strong>Cover Letter:</strong> {candidate.coverLetter}
-                                </div>
-                                <div>
-                                  <strong>Application Date:</strong> {candidate.applicationDate}
-                                </div>
+                      {selectedJob.candidates.slice(0, (currentPage + 1) * candidatesPerPage).map(candidate => (
+                        <CSSTransition key={candidate.id} timeout={300} classNames="candidate">
+                          <li key={candidate.id}>
+                            <div className="candidate-info">
+                              <div>
+                                <strong>Name:</strong> {candidate.name}
                               </div>
-                              <div className="candidate-actions">
-                                <strong>Status:</strong>
-                                <div className="status-buttons">
-                                  {/* <button
-                                    className={`status-button                                    applied ${candidate.status === 'applied' ? 'active' : ''}`}
-                                    onClick={() => handleStatusChange(candidate.id, 'applied')}>
-                                    Applied
-                                  </button> */}
-                                  <button
-                                    className={`status-button inprogress ${candidate.status === 'inprogress' ? 'active' : ''}`}
-                                    onClick={() => handleStatusChange(selectedJob.id, candidate.id, 'inprogress')}>
-                                    In Progress
-                                  </button>
-                                  <button
-                                    className={`status-button accepted ${candidate.status === 'accepted' ? 'active' : ''}`}
-                                    onClick={() => handleStatusChange(selectedJob.id,candidate.id, 'accepted')}>
-                                    Accepted
-                                  </button>
-                                  <button
-                                    className={`status-button rejected ${candidate.status === 'rejected' ? 'active' : ''}`}
-                                    onClick={() => handleStatusChange(selectedJob.id,candidate.id, 'rejected')}>
-                                    Rejected
-                                  </button>
-
-                                </div>
+                              <div>
+                                <strong>Email:</strong> {candidate.email}
                               </div>
-                            </li>
-                          </CSSTransition>
-                        )
+                              <div>
+                                <strong>Phone:</strong> {candidate.phone}
+                              </div>
+                              <div>
+                                <strong>Resume:</strong> {candidate.resume}
+                              </div>
+                              <div>
+                                <strong>Cover Letter:</strong> {candidate.coverLetter}
+                              </div>
+                              <div>
+                                <strong>Application Date:</strong> {candidate.applicationDate}
+                              </div>
+                            </div>
+                            <div className="candidate-actions">
+                              <strong>Status:</strong>
+                              <div className="status-buttons">
+                                <button
+                                  className={`status-button inprogress ${candidate.status === 'inprogress' ? 'active' : ''}`}
+                                  onClick={() => handleStatusChange(selectedJob.id, candidate.id, 'inprogress')}>
+                                  In Progress
+                                </button>
+                                <button
+                                  className={`status-button accepted ${candidate.status === 'accepted' ? 'active' : ''}`}
+                                  onClick={() => handleStatusChange(selectedJob.id, candidate.id, 'accepted')}>
+                                  Accepted
+                                </button>
+                                <button
+                                  className={`status-button rejected ${candidate.status === 'rejected' ? 'active' : ''}`}
+                                  onClick={() => handleStatusChange(selectedJob.id, candidate.id, 'rejected')}>
+                                  Rejected
+                                </button>
+                              </div>
+                            </div>
+                          </li>
+                        </CSSTransition>
                       ))}
                     </TransitionGroup>
+                    {(currentPage + 1) * candidatesPerPage < selectedJob.candidates.length && (
+                      <>
+                        <button onClick={handleLoadMore}>Load More</button>
+                        {warningMessage && <p className="warning-message">{warningMessage}</p>}
+                      </>
+                    )}
                   </ul>
                 </div>
               ) : (
@@ -285,4 +249,3 @@ const JobPostData = () => {
 };
 
 export default JobPostData;
-

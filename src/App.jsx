@@ -10,6 +10,7 @@ import Home from './components/Home/Home';
 import Candidates from './components/Candidates/Candidates';
 import JobPostDataCandidates from './components/JobPostData/JobPostDataCandidates';
 import Admin from './components/Admin/Admin';
+import AppliedJobList from './components/AppliedJobList/AppliedJobList';
 import './App.scss';
 
 const App = () => {
@@ -28,7 +29,9 @@ const App = () => {
             <Route path="/employer" element={<Employer />} />
             <Route path="/candidate" element={<Candidates />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/candidate/jobs" element={<JobPostDataCandidates />} /> {/* New route */}
+            <Route path="/candidate/jobs" element={<JobPostDataCandidates />} /> 
+            <Route path="/applied-jobs/:candidateId" element={<AppliedJobList />} /> 
+            
 
           </Routes>
         </main>
