@@ -8,8 +8,8 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 const JobPostData = () => {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editJob, setEditJob] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
