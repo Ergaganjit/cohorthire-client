@@ -26,7 +26,7 @@ const JobPostDataCandidates = () => {
 
   const handleJobClick = async (jobId) => {
     try {
-      // console.log(`Applying for job with ID: ${jobId}`);
+      console.log(`Applying for job with ID: ${jobId}`);
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/jobs/${jobId}`);
       setSelectedJob(response.data);
     } catch (err) {

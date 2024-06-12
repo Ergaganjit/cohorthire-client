@@ -1,0 +1,31 @@
+// AppliedJobsList.scss
+.applied-jobs-container {
+    padding: 20px;
+  }
+  
+  .job-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .job-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .job-title {
+    font-weight: bold;
+  }
+  
+  .loading-message {
+    font-style: italic;
+    color: #888;
+  }
+  
+  .error-message {
+    color: #ff0000;
+  }
+  
