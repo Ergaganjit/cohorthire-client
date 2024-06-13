@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const AppliedJobsList = ({ candidateId }) => {
+const AppliedJobsPage = ({ candidateId }) => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-//   console.log('AJL-candidateId: ',candidateId);
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {
-      if (!candidateId) return; // Exit if candidateId is not provided
+      if (!candidateId) return;
       setLoading(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/api/candidates/${candidateId}/jobs`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/candidates/${candidateId}/jobs`);
         setAppliedJobs(response.data);
         console.log(response.data);
         setLoading(false);
@@ -41,7 +42,7 @@ const AppliedJobsList = ({ candidateId }) => {
     <div>
       <h2>List of Applied Jobs</h2>
       <ul>
-        {appliedJobs.map(job => (
+        {appliedJobs.map((job) => (
           <li key={job.id}>{job.jobTitle}</li>
         ))}
       </ul>
@@ -49,4 +50,4 @@ const AppliedJobsList = ({ candidateId }) => {
   );
 };
 
-export default AppliedJobsList;
+export default AppliedJobsPage;
